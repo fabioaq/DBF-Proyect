@@ -42,7 +42,17 @@ public class InstrumentType {
         return l;
     }
     
+    public int getAmmount(){
+        return l.size();
+    }
     
+    public static String[] getDescription(){
+        return description;
+    }
+    
+    private static final String[] description = {
+        "Code", "Unit Type", "Name", "Ammount"
+    };
     
     
     
