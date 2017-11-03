@@ -31,7 +31,12 @@ public class InformationManagement {
     }
     
     public List<InstrumentType> create(){
-        
+        InstrumentType i1 = new InstrumentType("Termometro", "a201", "Grados");
+        InstrumentType i2 = new InstrumentType("Probeta", "a202", "Litros");
+        InstrumentType i3 = new InstrumentType("Barometro", "a203", "Litros");
+        ins.add(i1);
+        ins.add(i2);
+        ins.add(i3);
         return ins;
         
     }
