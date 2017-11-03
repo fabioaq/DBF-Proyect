@@ -70,12 +70,16 @@ public class GraphicForm extends JFrame{
                      mainPanel = new JPanel());
              mainPanel.setLayout(new BorderLayout());
              b = new JButton("Ver Tipos de instrumento");
+             mainPanel.add(BorderLayout.CENTER, b);
              b.addActionListener(new ActionListener(){
                  @Override
                  public void actionPerformed(ActionEvent e) {
                      try {
                          if(InformationManagement.getInstance().areTypes()){
-                             table = new InsWinTable(InformationManagement.getInstance());
+                             
+                             Thread thread = new Thread(new InsWinTable(InformationManagement.getInstance()));
+                             thread.start();
+                             
                          }
                      } catch (InstantiationException | ClassNotFoundException | IllegalAccessException ex) {
                          Logger.getLogger(GraphicForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -83,7 +87,7 @@ public class GraphicForm extends JFrame{
                  }
                  
              });
-             mainPanel.add(BorderLayout.CENTER, b);
+             
              
         
     }
@@ -96,7 +100,6 @@ public class GraphicForm extends JFrame{
         new GraphicForm().init();
     }
     
-    private InsWinTable table;
     private JPanel mainPanel;
     private JButton b;
     private JTextField t;

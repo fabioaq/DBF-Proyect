@@ -14,7 +14,7 @@ import javax.swing.JTable;
  *
  * @author fabio
  */
-public class InsWinTable extends JFrame {
+public class InsWinTable extends JFrame implements Runnable{
 
     InsWinTable(InformationManagement inf) {
         this.info = inf;
@@ -52,9 +52,16 @@ public class InsWinTable extends JFrame {
     public void init() {
         setVisible(true);
     }
-
+    
+    @Override
+    public void run() {
+        init();
+    }
+    
     private final InformationManagement info;
     private JPanel mainPanel;
     private JTable table;
+
+   
 
 }
