@@ -1,21 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package graphicform;
 
 import informationmanagement.InformationManagement;
-import informationmanagement.InstrumentType;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -50,7 +47,6 @@ public class GraphicForm extends JFrame{
     }
 
     public GraphicForm() {
-        table = new JTable();
         config();
     }
     
@@ -69,24 +65,26 @@ public class GraphicForm extends JFrame{
     
     private void fixes(Container c){
         
-         try {
              c.setLayout(new BorderLayout());
              c.add(BorderLayout.CENTER,
                      mainPanel = new JPanel());
              mainPanel.setLayout(new BorderLayout());
-             mainPanel.add(BorderLayout.CENTER,
-                     new JScrollPane(
-                             table
-                                     = new JTable(
-                                             InformationManagement.getInstance().obtenerTabla(),
-                                             InstrumentType.getDescription()),
-                             JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
-                     )
-             );
-         } catch (InstantiationException | ClassNotFoundException | IllegalAccessException ex) {
-             Logger.getLogger(GraphicForm.class.getName()).log(Level.SEVERE, null, ex);
-         }
+             b = new JButton("Ver Tipos de instrumento");
+             b.addActionListener(new ActionListener(){
+                 @Override
+                 public void actionPerformed(ActionEvent e) {
+                     try {
+                         if(InformationManagement.getInstance().areTypes()){
+                             table = new InsWinTable(InformationManagement.getInstance());
+                         }
+                     } catch (InstantiationException | ClassNotFoundException | IllegalAccessException ex) {
+                         Logger.getLogger(GraphicForm.class.getName()).log(Level.SEVERE, null, ex);
+                     }
+                 }
+                 
+             });
+             mainPanel.add(BorderLayout.CENTER, b);
+             
         
     }
     
@@ -98,9 +96,9 @@ public class GraphicForm extends JFrame{
         new GraphicForm().init();
     }
     
-    
+    private InsWinTable table;
     private JPanel mainPanel;
-    private JTable table;
-    
+    private JButton b;
+    private JTextField t;
     
 }
