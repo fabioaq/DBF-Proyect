@@ -31,16 +31,8 @@ public class InformationManagement {
     }
     
     public List<InstrumentType> create(){
-        List<InstrumentType> r = new ArrayList<>();
-        InstrumentType t1 = new InstrumentType("Tubos de Ensayo", "2001", "Mililitros");
-        InstrumentType t2 = new InstrumentType("Probetas", "2002", "Mililitros");
-        InstrumentType t3 = new InstrumentType("Reglas", "2003", "Centimetros");
         
-        r.add(t1);
-        r.add(t2);
-        r.add(t3);
-        
-        return r;
+        return ins;
         
     }
     
@@ -58,8 +50,15 @@ public class InformationManagement {
         return r;
     }
     
+    public static void addInstrumentType(InstrumentType i){
+        ins.add(i);
+    }
     
+    public static boolean areTypes(){
+        return !ins.isEmpty();
+    }
     
+    private static final List<InstrumentType> ins = new ArrayList<>();;
     private static InformationManagement intance = null;
     private final DBgestor db;
     
