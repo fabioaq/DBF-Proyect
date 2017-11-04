@@ -1,10 +1,13 @@
 package graphicform;
 
+import controler.Controler;
 import informationmanagement.InformationManagement;
 import informationmanagement.InstrumentType;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -14,10 +17,10 @@ import javax.swing.JTable;
  *
  * @author fabio
  */
-public class InsWinTable extends JFrame implements Runnable{
+public class InsWinTable extends JFrame implements Runnable {
 
-    InsWinTable(InformationManagement inf) {
-        this.info = inf;
+    InsWinTable(Controler c) {
+        this.mainControl = c;
         config();
     }
 
@@ -40,7 +43,7 @@ public class InsWinTable extends JFrame implements Runnable{
                 new JScrollPane(
                         table
                         = new JTable(
-                                info.obtenerTabla(),
+                                mainControl.getTable(),
                                 InstrumentType.getDescription()),
                         JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                         JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
@@ -52,16 +55,14 @@ public class InsWinTable extends JFrame implements Runnable{
     public void init() {
         setVisible(true);
     }
-    
+
     @Override
     public void run() {
         init();
     }
-    
-    private final InformationManagement info;
+
     private JPanel mainPanel;
     private JTable table;
-
-   
+    private final Controler mainControl;
 
 }

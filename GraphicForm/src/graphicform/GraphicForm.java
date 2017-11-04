@@ -1,6 +1,7 @@
 
 package graphicform;
 
+import controler.Controler;
 import informationmanagement.InformationManagement;
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -46,7 +47,8 @@ public class GraphicForm extends JFrame{
         });
     }
 
-    public GraphicForm() {
+    public GraphicForm(Controler c) {
+        this.mainControl = c;
         config();
     }
     
@@ -74,16 +76,15 @@ public class GraphicForm extends JFrame{
              b.addActionListener(new ActionListener(){
                  @Override
                  public void actionPerformed(ActionEvent e) {
-                     try {
-                         if(InformationManagement.getInstance().areTypes()){
-                             
-                             Thread thread = new Thread(new InsWinTable(InformationManagement.getInstance()));
+                    
+                         if(mainControl.getTable() != null){
+                             System.out.print("entro \n");
+                             Thread thread = new Thread(new InsWinTable(mainControl));
                              thread.start();
                              
                          }
-                     } catch (InstantiationException | ClassNotFoundException | IllegalAccessException ex) {
-                         Logger.getLogger(GraphicForm.class.getName()).log(Level.SEVERE, null, ex);
-                     }
+                         
+                     
                  }
                  
              });
@@ -97,11 +98,12 @@ public class GraphicForm extends JFrame{
     }
     
     public static void showW(){
-        new GraphicForm().init();
+        new GraphicForm(new Controler()).init();
     }
     
     private JPanel mainPanel;
     private JButton b;
     private JTextField t;
+    private final Controler mainControl;
     
 }
