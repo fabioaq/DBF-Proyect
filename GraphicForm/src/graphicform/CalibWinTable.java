@@ -16,9 +16,9 @@ import javax.swing.JTable;
  *
  * @author fabio
  */
-public class InsWinTable extends JFrame implements Runnable {
+public class CalibWinTable extends JFrame implements Runnable {
 
-    InsWinTable(Controler c) {
+    CalibWinTable(Controler c) {
         this.mainControl = c;
         config();
     }
@@ -43,7 +43,7 @@ public class InsWinTable extends JFrame implements Runnable {
                         table
                         = new JTable(
                                 mainControl.getTable(),
-                                mainControl.getHeader(2)),
+                                mainControl.getHeader(3)),
                         JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                         JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
                 )
