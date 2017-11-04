@@ -27,6 +27,14 @@ public class Calibrations {
         return m;
     }
     
+     public static String[] getDescription(){
+        return description;
+    }
+    
+    private static final String[] description = {
+        "Id", "Date", "Meditions"
+    };
+    
     private final Integer id;
     private final String date;
     private final ArrayList<Meditions> m;

@@ -27,7 +27,13 @@ public class Meditions {
         return reference;
     }
     
+     public static String[] getDescription(){
+        return description;
+    }
     
+    private static final String[] description = {
+        "Number", "Lecture", "Reference"
+    };
     
     
     private final Integer number;

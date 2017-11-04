@@ -63,6 +63,13 @@ public class Instrument {
         this.tol = tol;
     }
     
+     public static String[] getDescription(){
+        return description;
+    }
+    
+    private static final String[] description = {
+        "Id", "Name", "Ammount", "Min", "Max", "Tolerance"
+    };
     
     
     
