@@ -1,6 +1,10 @@
 package controler;
 
+import informationmanagement.Calibrations;
 import informationmanagement.InformationManagement;
+import informationmanagement.Instrument;
+import informationmanagement.InstrumentType;
+import informationmanagement.Meditions;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -10,12 +14,11 @@ import java.util.logging.Logger;
  */
 public class Controler {
 
-    
     public Controler() {
-       
+
     }
-    
-    public Object[][] getTable(){
+
+    public Object[][] getTable() {
         try {
             return InformationManagement.getInstance().obtenerTabla();
         } catch (InstantiationException | ClassNotFoundException | IllegalAccessException ex) {
@@ -24,5 +27,16 @@ public class Controler {
         return null;
     }
 
-    
+    public String[] getHeader(int h) {
+        switch (h) {
+            case 1:
+                return InstrumentType.getDescription();
+            case 2:
+                return Instrument.getDescription();
+            case 3:
+                return Calibrations.getDescription();
+            default:
+                return Meditions.getDescription();
+        }
+    }
 }
