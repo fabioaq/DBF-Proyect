@@ -1,0 +1,44 @@
+package graphicform;
+
+import java.awt.Container;
+import java.awt.Dimension;
+import javax.swing.JButton;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+/**
+ *
+ * @author fabio
+ */
+public class InsTyForm extends JInternalFrame{
+
+    public InsTyForm() {
+        super("Agregar", true, true, true, true);
+        config();
+    }
+    
+    private void config(){
+        fixes(getContentPane());
+        setResizable(true);
+        setSize(200, 400);
+        setMinimumSize(new Dimension(200, 400));
+    }
+    
+    private void fixes(Container c){
+        
+    }
+
+    
+    private JPanel mainPanel;
+    private JButton submmit;
+    
+    private JTextField id;
+    private JTextField name;
+    private JTextField unitT;
+    
+    private JLabel idL;
+    private JLabel nameL;
+    private JLabel unitTL;
+}

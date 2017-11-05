@@ -65,12 +65,9 @@ public class GraphicForm extends JFrame {
     private void fixes(Container c) {
 
         c.setLayout(new BorderLayout());
-//        c.add(BorderLayout.CENTER,
-//                mainPanel = new JPanel());
 
         desk = new JDesktopPane();
         c.add(BorderLayout.CENTER, desk);
-//        mainPanel.setLayout(new BorderLayout());
         menuPrincipal = new JMenuBar();
         menuPrincipal.add(DBwork = new JMenu("Opciones Base de Datos"));
         menuPrincipal.add(openTables = new JMenu("Tablas de Información"));
@@ -84,34 +81,13 @@ public class GraphicForm extends JFrame {
         itemOpenInTy.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                if (mainControl.getTable() != null) {
-                    InsTypeWinTable win = new InsTypeWinTable(mainControl);
-                    desk.add(win);
-                    win.show();
-                }
+                    typeInsW = new InsTypeWinTable(mainControl);
+                    desk.add(typeInsW);
+                    typeInsW.show();
             }
         });
 
         setJMenuBar(menuPrincipal);
-//        insTyB = new JButton("Ver Tipos de instrumento");
-//        mainPanel.add(BorderLayout.CENTER, insTyB);
-//        insTyB.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//
-//                if (mainControl.getTable() != null) {
-//                    
-//                    System.out.print("entro \n");
-//                    Thread thread = new Thread(new InsTypeWinTable(mainControl));
-//                    thread.start();
-//                    
-//
-//                }
-//
-//            }
-//
-//        });
 
     }
 
@@ -123,9 +99,6 @@ public class GraphicForm extends JFrame {
         new GraphicForm(new Controler()).init();
     }
 
-    private JPanel mainPanel;
-    private JButton insTyB;
-    private JTextField t;
     private final Controler mainControl;
     private JMenuBar menuPrincipal;
     private JMenu DBwork;
@@ -138,5 +111,7 @@ public class GraphicForm extends JFrame {
     private JMenuItem itemOpenMed;
 
     private JDesktopPane desk;
+    
+    private InsTypeWinTable typeInsW;
 
 }

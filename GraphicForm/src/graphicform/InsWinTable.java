@@ -11,6 +11,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,6 +22,13 @@ public class InsWinTable extends JInternalFrame {
     InsWinTable(Controler c) {
         super("Tipos de Instrumentos", true, true, true, true);
         this.mainControl = c;
+        this.tableModel = new DefaultTableModel(mainControl.getTable(), mainControl.getHeader(1)) {
+            
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         config();
     }
 
@@ -35,38 +43,33 @@ public class InsWinTable extends JInternalFrame {
     private void fixes(Container c) {
 
         c.setLayout(new BorderLayout());
-        
+
         menuPrincipal = new JMenuBar();
         menuPrincipal.add(editar = new JMenu("Opciones"));
-        
+
         //
-        
         editar.add(itemAgregar = new JMenuItem("Agregar"));
         editar.add(itemBorrar = new JMenuItem("Borrar"));
         editar.add(itemEditar = new JMenuItem("Editar"));
-        
+
         //
-        
+        table = new JTable(mainControl.getTable(), mainControl.getHeader(1));
+        table.setModel(tableModel);
+        //
+
         c.add(BorderLayout.CENTER,
                 mainPanel = new JPanel());
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(BorderLayout.CENTER,
                 new JScrollPane(
-                        table
-                        = new JTable(
-                                mainControl.getTable(),
-                                mainControl.getHeader(2)),
-                        JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                        table,
+                         JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                         JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
                 )
         );
-        
+
         setJMenuBar(menuPrincipal);
 
-    }
-
-    public void init() {
-        setVisible(true);
     }
 
     private JPanel mainPanel;
@@ -77,5 +80,6 @@ public class InsWinTable extends JInternalFrame {
     private JMenuItem itemBorrar;
     private JMenuItem itemAgregar;
     private JMenuItem itemEditar;
+    DefaultTableModel tableModel;
 
 }

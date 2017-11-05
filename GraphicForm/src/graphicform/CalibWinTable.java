@@ -11,6 +11,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,6 +22,13 @@ public class CalibWinTable extends JInternalFrame {
     CalibWinTable(Controler c) {
         super("Calibraciones", true, true, true, true);
         this.mainControl = c;
+        this.tableModel = new DefaultTableModel(mainControl.getTable(), mainControl.getHeader(1)) {
+            
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         config();
     }
 
@@ -29,25 +37,22 @@ public class CalibWinTable extends JInternalFrame {
         setResizable(true);
         setSize(400, 600);
         setMinimumSize(new Dimension(400, 300));
-        
 
     }
 
     private void fixes(Container c) {
 
         c.setLayout(new BorderLayout());
-        
+
         menuPrincipal = new JMenuBar();
         menuPrincipal.add(editar = new JMenu("Opciones"));
-        
+
         //
-        
         editar.add(itemAgregar = new JMenuItem("Agregar"));
         editar.add(itemBorrar = new JMenuItem("Borrar"));
         editar.add(itemEditar = new JMenuItem("Editar"));
-        
+
         //
-        
         c.add(BorderLayout.CENTER,
                 mainPanel = new JPanel());
         mainPanel.setLayout(new BorderLayout());
@@ -61,16 +66,12 @@ public class CalibWinTable extends JInternalFrame {
                         JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
                 )
         );
-        
+        table.setModel(tableModel);
+
         setJMenuBar(menuPrincipal);
 
     }
 
-    public void init() {
-        setVisible(true);
-    }
-
-    
 
     private JPanel mainPanel;
     private JTable table;
@@ -80,5 +81,7 @@ public class CalibWinTable extends JInternalFrame {
     private JMenuItem itemBorrar;
     private JMenuItem itemAgregar;
     private JMenuItem itemEditar;
+
+    DefaultTableModel tableModel;
 
 }
