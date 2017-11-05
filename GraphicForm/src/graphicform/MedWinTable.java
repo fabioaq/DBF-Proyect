@@ -4,7 +4,7 @@ import controler.Controler;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -16,9 +16,10 @@ import javax.swing.JTable;
  *
  * @author fabio
  */
-public class MedWinTable extends JFrame implements Runnable {
+public class MedWinTable extends JInternalFrame {
 
     MedWinTable(Controler c) {
+        super("Mediciones", true, true, true);
         this.mainControl = c;
         config();
     }
@@ -28,13 +29,25 @@ public class MedWinTable extends JFrame implements Runnable {
         setResizable(true);
         setSize(400, 600);
         setMinimumSize(new Dimension(400, 300));
-        setLocationRelativeTo(null);
+        
 
     }
 
     private void fixes(Container c) {
 
         c.setLayout(new BorderLayout());
+        
+        menuPrincipal = new JMenuBar();
+        menuPrincipal.add(editar = new JMenu("Opciones"));
+        
+        //
+        
+        editar.add(itemAgregar = new JMenuItem("Agregar"));
+        editar.add(itemBorrar = new JMenuItem("Borrar"));
+        editar.add(itemEditar = new JMenuItem("Editar"));
+        
+        //
+        
         c.add(BorderLayout.CENTER,
                 mainPanel = new JPanel());
         mainPanel.setLayout(new BorderLayout());
@@ -48,6 +61,8 @@ public class MedWinTable extends JFrame implements Runnable {
                         JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
                 )
         );
+        
+        setJMenuBar(menuPrincipal);
 
     }
 
@@ -55,17 +70,15 @@ public class MedWinTable extends JFrame implements Runnable {
         setVisible(true);
     }
 
-    @Override
-    public void run() {
-        init();
-    }
+    
 
     private JPanel mainPanel;
     private JTable table;
     private final Controler mainControl;
     private JMenuBar menuPrincipal;
-    private JMenu menuVerificar;
-
-    private JMenuItem itemGuardar;
+    private JMenu editar;
+    private JMenuItem itemBorrar;
+    private JMenuItem itemAgregar;
+    private JMenuItem itemEditar;
 
 }

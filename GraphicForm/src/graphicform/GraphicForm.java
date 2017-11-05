@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -54,7 +55,7 @@ public class GraphicForm extends JFrame {
     private void config() {
         fixes(getContentPane());
         setResizable(true);
-        setSize(400, 600);
+        setSize(800, 800);
         setMinimumSize(new Dimension(400, 300));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -64,30 +65,53 @@ public class GraphicForm extends JFrame {
     private void fixes(Container c) {
 
         c.setLayout(new BorderLayout());
-        c.add(BorderLayout.CENTER,
-                mainPanel = new JPanel());
-        mainPanel.setLayout(new BorderLayout());
-        menuPrincipal = new JMenuBar();
-        menuPrincipal.add(menuVerificar = new JMenu("Test"));
-        menuVerificar.add(itemGuardar = new JMenuItem("Hola"));
+//        c.add(BorderLayout.CENTER,
+//                mainPanel = new JPanel());
 
-        setJMenuBar(menuPrincipal);
-        b = new JButton("Ver Tipos de instrumento");
-        mainPanel.add(BorderLayout.CENTER, b);
-        b.addActionListener(new ActionListener() {
+        desk = new JDesktopPane();
+        c.add(BorderLayout.CENTER, desk);
+//        mainPanel.setLayout(new BorderLayout());
+        menuPrincipal = new JMenuBar();
+        menuPrincipal.add(DBwork = new JMenu("Opciones Base de Datos"));
+        menuPrincipal.add(openTables = new JMenu("Tablas de Información"));
+
+        //
+        DBwork.add(itemGuardar = new JMenuItem("Guardar"));
+        DBwork.add(itemCargar = new JMenuItem("Cargar"));
+
+        //
+        openTables.add(itemOpenInTy = new JMenuItem("Abrir tabla de tipos de instrumentos"));
+        itemOpenInTy.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 if (mainControl.getTable() != null) {
-                    System.out.print("entro \n");
-                    Thread thread = new Thread(new InsTypeWinTable(mainControl));
-                    thread.start();
-
+                    InsTypeWinTable win = new InsTypeWinTable(mainControl);
+                    desk.add(win);
+                    win.show();
                 }
-
             }
-
         });
+
+        setJMenuBar(menuPrincipal);
+//        insTyB = new JButton("Ver Tipos de instrumento");
+//        mainPanel.add(BorderLayout.CENTER, insTyB);
+//        insTyB.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//                if (mainControl.getTable() != null) {
+//                    
+//                    System.out.print("entro \n");
+//                    Thread thread = new Thread(new InsTypeWinTable(mainControl));
+//                    thread.start();
+//                    
+//
+//                }
+//
+//            }
+//
+//        });
 
     }
 
@@ -100,11 +124,19 @@ public class GraphicForm extends JFrame {
     }
 
     private JPanel mainPanel;
-    private JButton b;
+    private JButton insTyB;
     private JTextField t;
     private final Controler mainControl;
     private JMenuBar menuPrincipal;
-    private JMenu menuVerificar;
+    private JMenu DBwork;
     private JMenuItem itemGuardar;
+    private JMenuItem itemCargar;
+    private JMenu openTables;
+    private JMenuItem itemOpenInTy;
+    private JMenuItem itemOpenIns;
+    private JMenuItem itemOpenCalib;
+    private JMenuItem itemOpenMed;
+
+    private JDesktopPane desk;
 
 }
