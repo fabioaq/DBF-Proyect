@@ -19,7 +19,7 @@ import javax.swing.JTable;
 public class InsTypeWinTable extends JInternalFrame{
 
     InsTypeWinTable(Controler c) {
-        super("Instrumentos", true, true, true);
+        super("Instrumentos", true, true, true, true);
         this.mainControl = c;
         config();
     }

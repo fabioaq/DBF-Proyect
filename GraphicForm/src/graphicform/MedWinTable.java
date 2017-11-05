@@ -19,7 +19,7 @@ import javax.swing.JTable;
 public class MedWinTable extends JInternalFrame {
 
     MedWinTable(Controler c) {
-        super("Mediciones", true, true, true);
+        super("Mediciones", true, true, true, true);
         this.mainControl = c;
         config();
     }

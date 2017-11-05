@@ -19,7 +19,7 @@ import javax.swing.JTable;
 public class CalibWinTable extends JInternalFrame {
 
     CalibWinTable(Controler c) {
-        super("Calibraciones", true, true, true);
+        super("Calibraciones", true, true, true, true);
         this.mainControl = c;
         config();
     }
