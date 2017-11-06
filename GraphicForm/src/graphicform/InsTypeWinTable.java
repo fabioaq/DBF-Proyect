@@ -26,7 +26,7 @@ public class InsTypeWinTable extends JInternalFrame {
             
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false;
+                return (column != 0 && column != 3);
             }
         };
         config();

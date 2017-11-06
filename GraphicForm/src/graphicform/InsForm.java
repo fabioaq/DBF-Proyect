@@ -1,5 +1,6 @@
 package graphicform;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import javax.swing.JButton;
@@ -27,6 +28,7 @@ public class InsForm extends JInternalFrame{
     }
     
     private void fixes(Container c){
+        c.setLayout(new BorderLayout());
         
     }
     

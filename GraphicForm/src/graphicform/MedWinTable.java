@@ -26,7 +26,7 @@ public class MedWinTable extends JInternalFrame {
             
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false;
+                return column != 0;
             }
         };
         config();
