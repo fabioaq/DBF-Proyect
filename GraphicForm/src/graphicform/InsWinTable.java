@@ -50,7 +50,7 @@ public class InsWinTable extends JInternalFrame {
         //
         editar.add(itemAgregar = new JMenuItem("Agregar"));
         editar.add(itemBorrar = new JMenuItem("Borrar"));
-        editar.add(itemEditar = new JMenuItem("Editar"));
+        editar.add(itemBuscar = new JMenuItem("Buscar"));
 
         //
         table = new JTable(mainControl.getTable(), mainControl.getHeader(1));
@@ -79,7 +79,7 @@ public class InsWinTable extends JInternalFrame {
     private JMenu editar;
     private JMenuItem itemBorrar;
     private JMenuItem itemAgregar;
-    private JMenuItem itemEditar;
+    private JMenuItem itemBuscar;
     DefaultTableModel tableModel;
 
 }

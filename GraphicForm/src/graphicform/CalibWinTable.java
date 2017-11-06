@@ -50,7 +50,7 @@ public class CalibWinTable extends JInternalFrame {
         //
         editar.add(itemAgregar = new JMenuItem("Agregar"));
         editar.add(itemBorrar = new JMenuItem("Borrar"));
-        editar.add(itemEditar = new JMenuItem("Editar"));
+        editar.add(itemBuscar = new JMenuItem("Buscar"));
 
         //
         c.add(BorderLayout.CENTER,
@@ -80,7 +80,7 @@ public class CalibWinTable extends JInternalFrame {
     private JMenu editar;
     private JMenuItem itemBorrar;
     private JMenuItem itemAgregar;
-    private JMenuItem itemEditar;
+    private JMenuItem itemBuscar;
 
     DefaultTableModel tableModel;
 
