@@ -8,6 +8,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
@@ -50,8 +52,13 @@ public class MainView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.print("Hola");
-                ventanaInstrumentos v = new ventanaInstrumentos();
-                v.init();
+                ventanaInstrumentos v;
+                try {
+                    v = ventanaInstrumentos.getInstancia();
+                    v.init();
+                } catch (InstantiationException | ClassNotFoundException | IllegalAccessException ex) {
+                    Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             
         });
@@ -60,8 +67,13 @@ public class MainView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.print("Adios");
-                ventanaTiposInstrumentos v = new ventanaTiposInstrumentos();
-                v.init();
+                ventanaTiposInstrumentos v;
+                try {
+                    v = ventanaTiposInstrumentos.getInstancia();
+                    v.init();
+                } catch (InstantiationException | ClassNotFoundException | IllegalAccessException ex) {
+                    Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             
         });
