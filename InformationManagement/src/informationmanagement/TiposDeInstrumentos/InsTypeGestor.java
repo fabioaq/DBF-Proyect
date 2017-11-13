@@ -151,20 +151,20 @@ public class InsTypeGestor {
         return r;
     }
 
-    private static final String BASE_DATOS = "SILDB";
+    private static final String BASE_DATOS = "SILBD";
     private static final String USUARIO = "root";
     private static final String CLAVE = "";
 
     private static final String CMD_LISTAR
-            = "SELECT codigo, nombre, unidad FROM tiposinstrumentos ORDER BY codigo;";
+            = "SELECT codigo, nombre, unidad FROM TiposInstrumentos ORDER BY codigo;";
     private static final String CMD_AGREGAR
-            = "INSERT INTO tiposinstrumentos (codigo, nombre, unidad) VALUES (?, ?, ?);";
+            = "INSERT INTO TiposInstrumentos (codigo, nombre, unidad) VALUES (?, ?, ?);";
     private static final String CMD_RECUPERAR
-            = "SELECT codigo, nombre, unidad FROM tiposinstrumentos WHERE codigo=?; ";
+            = "SELECT codigo, nombre, unidad FROM TiposInstrumentos WHERE codigo=?; ";
     private static final String CMD_ACTUALIZAR
-            = "UPDATE tiposinstrumentos SET nombre=?, unidad=? WHERE codigo=?;";
+            = "UPDATE TiposInstrumentos SET nombre=?, unidad=? WHERE codigo=?;";
     private static final String CMD_ELIMINAR
-            = "DELETE FROM tiposinstrumentos WHERE codigo=?; ";
+            = "DELETE FROM TiposInstrumentos WHERE codigo=?; ";
     private static InsTypeGestor instancia = null;
     private final DBgestor bd;
 }

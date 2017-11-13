@@ -10,7 +10,7 @@ import java.sql.Date;
  */
 public class Calibration {
 
-    public Calibration(Integer id, String instrument, Date date) {
+    public Calibration(int id, String instrument, Date date) {
         this.id = id;
         this.date = date;
         this.instrument = instrument;
@@ -55,10 +55,10 @@ public class Calibration {
     }
     
     private static final String[] description = {
-        "Id", "Date", "Meditions"
+        "Id", "Instrumento", "Fecha", "Mediciones"
     };
     
-    private final Integer id;
+    private final int id;
     private final Date date;
     private final String instrument;
     private final ArrayList<Meditions> m;

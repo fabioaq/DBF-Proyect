@@ -1,8 +1,5 @@
 package informationmanagement.TiposDeInstrumentos;
 
-import informationmanagement.Instrumentos.Instrument;
-import java.util.ArrayList;
-
 /**
  *
  * @author fabio
@@ -13,7 +10,6 @@ public class InstrumentType {
         this.name = name;
         this.code = code;
         this.unitType = unitType;
-        this.l = new ArrayList<>();
     }
 
     
@@ -39,9 +35,6 @@ public class InstrumentType {
         this.unitType = unitType;
     }
 
-    public ArrayList<Instrument> getL() {
-        return l;
-    }
     
     public static String[] getDescription(){
         return description;
@@ -53,7 +46,7 @@ public class InstrumentType {
     }
     
     private static final String[] description = {
-        "Code", "Unit Type", "Name"
+        "Codigo",  "Nombre", "Tipo de Unidad"
     };
     
     
@@ -61,5 +54,4 @@ public class InstrumentType {
     private String name;
     private final String code;
     private String unitType;
-    private ArrayList<Instrument> l;
 }

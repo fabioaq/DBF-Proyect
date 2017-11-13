@@ -158,7 +158,7 @@ public class MedGestor {
         return r;
     }
 
-    private static final String BASE_DATOS = "SILDB";
+    private static final String BASE_DATOS = "SILBD";
     private static final String USUARIO = "root";
     private static final String CLAVE = "";
 

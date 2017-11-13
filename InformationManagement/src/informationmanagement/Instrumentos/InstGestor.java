@@ -147,7 +147,7 @@ public class InstGestor {
 
     public Object[][] obtenerTabla() {
         List<Instrument> instrumentos = listaMedidas();
-        Object[][] r = new Object[instrumentos.size()][3];
+        Object[][] r = new Object[instrumentos.size()][6];
         int i = 0;
         for (Instrument in : instrumentos) {
             r[i][0] = in.getId();
@@ -161,24 +161,24 @@ public class InstGestor {
         return r;
     }
 
-    private static final String BASE_DATOS = "SILDB";
+    private static final String BASE_DATOS = "SILBD";
     private static final String USUARIO = "root";
     private static final String CLAVE = "";
 
     private static final String CMD_LISTAR
             = "SELECT serie, tipo, descripcion, minimo, maximo,"
-            + " tolerancia FROM instrumentos ORDER BY serie;";
+            + " tolerancia FROM Instrumentos ORDER BY serie;";
     private static final String CMD_AGREGAR
-            = "INSERT INTO instrumentos (serie, tipo, descripcion,"
+            = "INSERT INTO Instrumentos (serie, tipo, descripcion,"
             + " minimo, maximo, tolerancia) VALUES (?, ?, ?);";
     private static final String CMD_RECUPERAR
             = "SELECT serie, tipo, descripcion, minimo, maximo,"
-            + " tolerancia FROM instrumentos WHERE serie=?; ";
+            + " tolerancia FROM Instrumentos WHERE serie=?; ";
     private static final String CMD_ACTUALIZAR
-            = "UPDATE instrumentos SET tipo=?, descripcion=?, "
+            = "UPDATE Instrumentos SET tipo=?, descripcion=?, "
             + "minimo=?, maximo=?, tolerancia=? WHERE serie=?;";
     private static final String CMD_ELIMINAR
-            = "DELETE FROM instrumentos WHERE serie=?; ";
+            = "DELETE FROM Instrumentos WHERE serie=?; ";
     private static InstGestor instancia = null;
     private final DBgestor bd;
 }

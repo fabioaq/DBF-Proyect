@@ -37,7 +37,7 @@ public class Meditions {
     }
     
     private static final String[] description = {
-        "Number", "Lecture", "Reference"
+        "Numero", "Referencia", "Lectura"
     };
     
     

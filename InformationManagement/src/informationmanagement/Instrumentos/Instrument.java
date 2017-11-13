@@ -56,7 +56,7 @@ public class Instrument {
     }
     
     private static final String[] description = {
-        "Id", "Name", "Ammount", "Min", "Max", "Tolerance"
+        "Id", "Tipo", "Nombre", "Minimo", "Maximo", "Tolerancia"
     };
     
     
