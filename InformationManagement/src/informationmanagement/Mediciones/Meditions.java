@@ -1,4 +1,4 @@
-package informationmanagement;
+package informationmanagement.Mediciones;
 
 /**
  *
@@ -6,7 +6,7 @@ package informationmanagement;
  */
 public class Meditions {
 
-    public Meditions(Integer number, String lecture, String reference) {
+    public Meditions(int number, int reference, int lecture) {
         this.number = number;
         this.lecture = lecture;
         this.reference = reference;
@@ -19,16 +19,21 @@ public class Meditions {
         return number;
     }
 
-    public String getLecture() {
+    public int getLecture() {
         return lecture;
     }
 
-    public String getReference() {
+    public int getReference() {
         return reference;
     }
     
      public static String[] getDescription(){
         return description;
+    }
+     
+     @Override
+    public String toString() {
+        return String.format("{%d, %d %d}", number, reference, lecture);
     }
     
     private static final String[] description = {
@@ -36,7 +41,7 @@ public class Meditions {
     };
     
     
-    private final Integer number;
-    private final String lecture;
-    private final String reference;
+    private final int number;
+    private final int lecture;
+    private final int reference;
 }

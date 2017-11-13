@@ -1,5 +1,6 @@
-package informationmanagement;
+package informationmanagement.TiposDeInstrumentos;
 
+import informationmanagement.Instrumentos.Instrument;
 import java.util.ArrayList;
 
 /**
@@ -8,7 +9,7 @@ import java.util.ArrayList;
  */
 public class InstrumentType {
 
-    public InstrumentType(String name, String code, String unitType) {
+    public InstrumentType( String code, String name, String unitType) {
         this.name = name;
         this.code = code;
         this.unitType = unitType;
@@ -42,16 +43,17 @@ public class InstrumentType {
         return l;
     }
     
-    public int getAmmount(){
-        return l.size();
-    }
-    
     public static String[] getDescription(){
         return description;
     }
     
+    @Override
+    public String toString() {
+        return String.format("{%s, %s ,%s}", code, name, unitType);
+    }
+    
     private static final String[] description = {
-        "Code", "Unit Type", "Name", "Ammount"
+        "Code", "Unit Type", "Name"
     };
     
     

@@ -1,4 +1,4 @@
-package informationmanagement;
+package informationmanagement.Instrumentos;
 
 /**
  *
@@ -6,13 +6,13 @@ package informationmanagement;
  */
 public class Instrument {
 
-    public Instrument(String name, String id, Integer cant, String min, String max, String tol) {
+    public Instrument(String id, String type, String name,  int min, int max, int tol) {
         this.name = name;
         this.id = id;
-        this.cant = cant;
         this.min = min;
         this.max = max;
         this.tol = tol;
+        this.type = type;
     }
 
     
@@ -28,39 +28,27 @@ public class Instrument {
     public String getId() {
         return id;
     }
-
     
-
-    public Integer getCant() {
-        return cant;
-    }
-
-    public void setCant(Integer cant) {
-        this.cant = cant;
-    }
-
-    public String getMin() {
+    public int getMin() {
         return min;
     }
 
-    public void setMin(String min) {
-        this.min = min;
-    }
-
-    public String getMax() {
+    public int getMax() {
         return max;
     }
 
-    public void setMax(String max) {
-        this.max = max;
-    }
-
-    public String getTol() {
+    public int getTol() {
         return tol;
     }
-
-    public void setTol(String tol) {
-        this.tol = tol;
+    
+    public String getType() {
+        return type;
+    }
+    
+    @Override
+    public String toString(){
+        return String.format("{%s, %s ,%s , %d, %d ,%d}", id, type,
+                name,min,max,tol);
     }
     
      public static String[] getDescription(){
@@ -76,8 +64,8 @@ public class Instrument {
     
     private String name;
     private final String id;
-    private Integer cant;
-    private String min;
-    private String max;
-    private String tol;
+    private final String type;
+    private final int min;
+    private final int max;
+    private final int tol;
 }
