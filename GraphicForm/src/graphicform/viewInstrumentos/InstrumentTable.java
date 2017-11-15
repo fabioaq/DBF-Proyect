@@ -19,10 +19,31 @@ public class InstrumentTable extends AbstractTableModel{
             System.err.printf("%s%n", ex.getMessage());
         }
     }
+    
+    private InstrumentTable(String k) {
+        key = k;
+        try {
+            instrumentos = InstGestor.getInstancia().obtenerTabla(k);
+        } catch (ClassNotFoundException
+                | IllegalAccessException
+                | InstantiationException ex) {
+            System.err.printf("%s%n", ex.getMessage());
+        }
+    }
 
     public static InstrumentTable getInstancia() {
         if (instancia == null) {
             instancia = new InstrumentTable();
+        }
+        if(key.compareTo("null") != 0){
+            key = "null";
+        }
+        return instancia;
+    }
+    
+    public static InstrumentTable getInstancia(String key) {
+        if (instancia == null) {
+            instancia = new InstrumentTable(key);
         }
         return instancia;
     }
@@ -77,5 +98,6 @@ public class InstrumentTable extends AbstractTableModel{
     }
 
     private static InstrumentTable instancia = null;
+    private static String key = "null";
     private Object[][] instrumentos;
 }

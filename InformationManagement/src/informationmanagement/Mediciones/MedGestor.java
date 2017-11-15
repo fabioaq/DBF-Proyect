@@ -39,7 +39,7 @@ public class MedGestor {
     }
 
     // (C)reate
-    public boolean agregar(Meditions nuevaMedida) {
+    public boolean agregar(Meditions nuevaMedida, int key) {
         boolean exito = false;
         try {
             try (Connection cnx = bd.obtenerConexion(BASE_DATOS, USUARIO, CLAVE);
@@ -48,6 +48,7 @@ public class MedGestor {
                 stm.setInt(1, nuevaMedida.getNumber());
                 stm.setInt(2, nuevaMedida.getReference());
                 stm.setInt(3, nuevaMedida.getLecture());
+                stm.setInt(4, key);
                 int r = stm.executeUpdate();
                 exito = (r == 1);
             }
@@ -102,6 +103,33 @@ public class MedGestor {
         }
         return exito;
     }
+    
+    //Search Foreign Key
+    public List<Meditions> FKS(int tipo){
+        List<Meditions> r = new ArrayList<>();
+         try {
+            try (Connection cnx = bd.obtenerConexion(BASE_DATOS, USUARIO, CLAVE);
+                    PreparedStatement stm = cnx.prepareStatement(CMD_BUSCAR_FKEY);) {
+                stm.clearParameters();
+                stm.setInt(1, tipo);
+                ResultSet rs = stm.executeQuery();
+                
+                while (rs.next()) {
+                    r.add(new Meditions(
+                            rs.getInt("numero"),
+                            rs.getInt("referencia"),
+                            rs.getInt("lectura")
+                    ));
+                }
+                
+                
+             }
+        } catch (SQLException ex) {
+            System.err.printf("Excepción: '%s'%n",
+                    ex.getMessage());
+        }
+         return r;
+    }
 
     // (D)elete
     public boolean eliminar(int numero) {
@@ -121,6 +149,8 @@ public class MedGestor {
         }
         return exito;
     }
+    
+    
     
     public List<Meditions> listaMedidas() {
         List<Meditions> r = new ArrayList<>();
@@ -157,21 +187,36 @@ public class MedGestor {
         }
         return r;
     }
+    
+    public Object[][] obtenerTabla(int key) {
+        List<Meditions> medidas = FKS(key);
+        Object[][] r = new Object[medidas.size()][3];
+        int i = 0;
+        for (Meditions e : medidas) {
+            r[i][0] = e.getNumber();
+            r[i][1] = e.getReference();
+            r[i][2] = e.getReference();
+            i++;
+        }
+        return r;
+    }
 
     private static final String BASE_DATOS = "SILBD";
     private static final String USUARIO = "root";
     private static final String CLAVE = "";
 
     private static final String CMD_LISTAR
-            = "SELECT numero, referencia, lectura FROM medidas ORDER BY numero;";
+            = "SELECT numero, referencia, lectura FROM Medidas ORDER BY numero;";
     private static final String CMD_AGREGAR
-            = "INSERT INTO medidas (numero, referencia, lectura) VALUES (?, ?, ?);";
+            = "INSERT INTO Medidas (numero, referencia, lectura, calibracion) VALUES (?, ?, ?, ?);";
     private static final String CMD_RECUPERAR
-            = "SELECT numero, referencia, lectura FROM medidas WHERE numero=?; ";
+            = "SELECT numero, referencia, lectura FROM Medidas WHERE numero=?; ";
     private static final String CMD_ACTUALIZAR
-            = "UPDATE medidas SET referencia=?, lectura=? WHERE numero=?;";
+            = "UPDATE Medidas SET referencia=?, lectura=? WHERE numero=?;";
     private static final String CMD_ELIMINAR
-            = "DELETE FROM medidas WHERE numero=?; ";
+            = "DELETE FROM Medidas WHERE numero=?; ";
+    private static final String CMD_BUSCAR_FKEY
+            = "SELECT numero, referencia, lectura FROM Medidas WHERE calibracion=?";
     private static MedGestor instancia = null;
     private final DBgestor bd;
 }

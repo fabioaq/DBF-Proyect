@@ -79,6 +79,36 @@ public class InstGestor {
         }
         return r;
     }
+    
+    //Search Foreign Key
+    public List<Instrument> FKS(String tipo){
+        List<Instrument> r = new ArrayList<>();
+         try {
+            try (Connection cnx = bd.obtenerConexion(BASE_DATOS, USUARIO, CLAVE);
+                    PreparedStatement stm = cnx.prepareStatement(CMD_BUSCAR_FKEY);) {
+                stm.clearParameters();
+                stm.setString(1, tipo);
+                ResultSet rs = stm.executeQuery();
+                
+                while (rs.next()) {
+                    r.add(new Instrument(
+                            rs.getString("serie"),
+                            rs.getString("tipo"),
+                            rs.getString("descripcion"),
+                            rs.getInt("minimo"),
+                            rs.getInt("maximo"),
+                            rs.getInt("tolerancia")
+                    ));
+                }
+                
+                
+             }
+        } catch (SQLException ex) {
+            System.err.printf("Excepción: '%s'%n",
+                    ex.getMessage());
+        }
+         return r;
+    }
 
     // (U)pdate
     public boolean actualizar(Instrument i) {
@@ -160,6 +190,22 @@ public class InstGestor {
         }
         return r;
     }
+    
+    public Object[][] obtenerTabla(String key) {
+        List<Instrument> instrumentos = FKS(key);
+        Object[][] r = new Object[instrumentos.size()][6];
+        int i = 0;
+        for (Instrument in : instrumentos) {
+            r[i][0] = in.getId();
+            r[i][1] = in.getType();
+            r[i][2] = in.getName();
+            r[i][3] = in.getMin();
+            r[i][4] = in.getMax();
+            r[i][5] = in.getTol();
+            i++;
+        }
+        return r;
+    }
 
     private static final String BASE_DATOS = "SILBD";
     private static final String USUARIO = "root";
@@ -170,7 +216,7 @@ public class InstGestor {
             + " tolerancia FROM Instrumentos ORDER BY serie;";
     private static final String CMD_AGREGAR
             = "INSERT INTO Instrumentos (serie, tipo, descripcion,"
-            + " minimo, maximo, tolerancia) VALUES (?, ?, ?);";
+            + " minimo, maximo, tolerancia) VALUES (?, ?, ?, ?, ?, ?);";
     private static final String CMD_RECUPERAR
             = "SELECT serie, tipo, descripcion, minimo, maximo,"
             + " tolerancia FROM Instrumentos WHERE serie=?; ";
@@ -179,6 +225,8 @@ public class InstGestor {
             + "minimo=?, maximo=?, tolerancia=? WHERE serie=?;";
     private static final String CMD_ELIMINAR
             = "DELETE FROM Instrumentos WHERE serie=?; ";
+    private static final String CMD_BUSCAR_FKEY
+            = "SELECT serie, tipo, descripcion, minimo, maximo,tolerancia FROM Instrumentos WHERE tipo=?";
     private static InstGestor instancia = null;
     private final DBgestor bd;
 }

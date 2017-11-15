@@ -32,7 +32,7 @@ public class InsTypeGestor {
         }
         return instancia;
     }
-
+    
     // (C)reate
     public boolean agregar(InstrumentType nuevoTipoInstrumento) {
         boolean exito = false;
@@ -100,13 +100,13 @@ public class InsTypeGestor {
     }
 
     // (D)elete
-    public boolean eliminar(int numCalibracion) {
+    public boolean eliminar(String codigo) {
         boolean exito = false;
         try {
             try (Connection cnx = bd.obtenerConexion(BASE_DATOS, USUARIO, CLAVE);
                     PreparedStatement stm = cnx.prepareStatement(CMD_ELIMINAR)) {
                 stm.clearParameters();
-                stm.setInt(1, numCalibracion);
+                stm.setString(1, codigo);
                 int r = stm.executeUpdate();
                 exito = (r == 1);
             }

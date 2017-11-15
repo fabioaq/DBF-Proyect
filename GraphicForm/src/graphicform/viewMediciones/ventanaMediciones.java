@@ -24,16 +24,34 @@ import javax.swing.JTable;
  */
 public class ventanaMediciones extends JFrame {
 
-    private void config() {
-        ajustes(getContentPane());
+    
+    private ventanaMediciones(int key) {
+        super("Mediciones");
+        controlPrincipal = new ControlMed();
+        config(key);
+    }
+    
+    public static ventanaMediciones getInstancia(int key) throws
+            InstantiationException,
+            ClassNotFoundException,
+            IllegalAccessException {
+        if (instancia == null) {
+            instancia = new ventanaMediciones(key);
+        }
+        return instancia;
+
+    }
+    
+    private void config(int key) {
+        ajustes(getContentPane(), key);
         setResizable(false);
         setResizable(true);
         setSize(600, 600);
         setMinimumSize(new Dimension(400, 400));
         setLocationRelativeTo(null);
     }
-
-    private void ajustes(Container c) {
+    
+    private void ajustes(Container c, int key) {
         c.setLayout(new BorderLayout());
         JPanel mainPanel = new JPanel();
         //
@@ -43,10 +61,16 @@ public class ventanaMediciones extends JFrame {
         mainPanel.add(buscar = new JButton("agregar"));
         mainPanel.add(listar = new JButton("Listar Tabla"));
         //
+        c.add(BorderLayout.NORTH, mainPanel);
+        c.add(BorderLayout.SOUTH, new JScrollPane(tabla = new JTable(MeditionsTable.getInstancia(key)),
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
+        //
         agregar.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                agrgarFormM w = new agrgarFormM(controlPrincipal, key);
+                w.init();
             }
             
         });
@@ -54,7 +78,10 @@ public class ventanaMediciones extends JFrame {
         borrar.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                int n = (int)tabla.getModel().getValueAt(tabla.getSelectedRow(), 0);
+                if(!controlPrincipal.borrar(n)){
+                    System.err.print("Error: Elemento inexistente");
+                }
             }
             
         });
@@ -75,10 +102,7 @@ public class ventanaMediciones extends JFrame {
             
         });
         //
-        c.add(BorderLayout.NORTH, mainPanel);
-        c.add(BorderLayout.SOUTH, new JScrollPane(tabla = new JTable(MeditionsTable.getInstancia()),
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
+        
     }
 
     public void init() {
@@ -90,5 +114,6 @@ public class ventanaMediciones extends JFrame {
     private JButton buscar;
     private JButton listar;
     private JTable tabla;
-    private ControlMed controlPrincipal;
+    private final ControlMed controlPrincipal;
+    private static ventanaMediciones instancia = null;
 }

@@ -26,5 +26,14 @@ public class ControlTdeIns {
         }
         return false;
     }
+
+    public boolean borrar(String n) {
+        try {
+            return InsTypeGestor.getInstancia().eliminar(n);
+        } catch (InstantiationException | ClassNotFoundException | IllegalAccessException ex) {
+            Logger.getLogger(ControlTdeIns.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
     
 }

@@ -6,6 +6,7 @@
 package informationmanagement.Calibraciones;
 
 import informationmanagement.DBgestores.DBgestor;
+import informationmanagement.Mediciones.MedGestor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +14,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -103,6 +106,33 @@ public class CalibGestor {
         }
         return exito;
     }
+    
+    //Search Foreign Key
+    public List<Calibration> FKS(String key){
+        List<Calibration> r = new ArrayList<>();
+         try {
+            try (Connection cnx = bd.obtenerConexion(BASE_DATOS, USUARIO, CLAVE);
+                    PreparedStatement stm = cnx.prepareStatement(CMD_BUSCAR_FKEY);) {
+                stm.clearParameters();
+                stm.setString(1, key);
+                ResultSet rs = stm.executeQuery();
+                
+                while (rs.next()) {
+                    r.add(new Calibration(
+                            rs.getInt("numCalibracion"),
+                            rs.getString("instrumento"),
+                            rs.getDate("fecha")
+                    ));
+                }
+                
+                
+             }
+        } catch (SQLException ex) {
+            System.err.printf("Excepción: '%s'%n",
+                    ex.getMessage());
+        }
+         return r;
+    }
 
     // (D)elete
     public boolean eliminar(int numCalibracion) {
@@ -121,6 +151,7 @@ public class CalibGestor {
         }
         return exito;
     }
+    
 
     public List<Calibration> listaMedidas() {
         List<Calibration> r = new ArrayList<>();
@@ -144,6 +175,19 @@ public class CalibGestor {
         return r;
     }
 
+    public Object[][] obtenerTabla(String key) {
+        List<Calibration> calibraciones = FKS(key);
+        Object[][] r = new Object[calibraciones.size()][3];
+        int i = 0;
+        for (Calibration c : calibraciones) {
+            r[i][0] = c.getId();
+            r[i][1] = c.getInstrument();
+            r[i][2] = c.getDate();
+            i++;
+        }
+        return r;
+    }
+    
     public Object[][] obtenerTabla() {
         List<Calibration> calibraciones = listaMedidas();
         Object[][] r = new Object[calibraciones.size()][3];
@@ -162,15 +206,17 @@ public class CalibGestor {
     private static final String CLAVE = "";
 
     private static final String CMD_LISTAR
-            = "SELECT numCalibracion, instrumento, fecha FROM calibraciones ORDER BY numCalibracion;";
+            = "SELECT numCalibracion, instrumento, fecha FROM Calibraciones ORDER BY numCalibracion;";
     private static final String CMD_AGREGAR
-            = "INSERT INTO calibraciones (numCalibracion, instrumento, fecha) VALUES (?, ?, ?);";
+            = "INSERT INTO Calibraciones (numCalibracion, instrumento, fecha) VALUES (?, ?, ?);";
     private static final String CMD_RECUPERAR
-            = "SELECT numCalibracion, instrumento, fecha FROM calibraciones WHERE numCalibracion=?; ";
+            = "SELECT numCalibracion, instrumento, fecha FROM Calibraciones WHERE numCalibracion=?; ";
     private static final String CMD_ACTUALIZAR
-            = "UPDATE calibraciones SET instrumento=?, fecha=? WHERE numCalibracion=?;";
+            = "UPDATE Calibraciones SET instrumento=?, fecha=? WHERE numCalibracion=?;";
     private static final String CMD_ELIMINAR
-            = "DELETE FROM calibraciones WHERE numCalibracion=?; ";
+            = "DELETE FROM Calibraciones WHERE numCalibracion=?; ";
+    private static final String CMD_BUSCAR_FKEY
+            = "SELECT numCalibracion, instrumento, fecha FROM Calibraciones WHERE instrumento=?";
     private static CalibGestor instancia = null;
     private final DBgestor bd;
 }

@@ -6,12 +6,18 @@
 package graphicform.viewCalibraciones;
 
 import controler.ControlCalibracion.ControlCalib;
+import graphicform.viewMediciones.ventanaMediciones;
+import graphicform.viewTiposDeIntrumentos.ventanaTiposInstrumentos;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,14 +30,25 @@ import javax.swing.JTable;
  */
 public class ventanaCalibracion extends JFrame {
 
-    public ventanaCalibracion() {
+    public ventanaCalibracion(String key) {
         super("Calibraciones");
         this.controlPrincipal = new ControlCalib();
+        config(key);
+    }
+    
+    public static ventanaCalibracion getInstancia(String key) throws
+            InstantiationException,
+            ClassNotFoundException,
+            IllegalAccessException {
+        if (instancia == null) {
+            instancia = new ventanaCalibracion(key);
+        }
+        return instancia;
 
     }
 
-    private void config() {
-        ajustes(getContentPane());
+    private void config(String key) {
+        ajustes(getContentPane(), key);
         setResizable(false);
         setResizable(true);
         setSize(600, 600);
@@ -39,7 +56,7 @@ public class ventanaCalibracion extends JFrame {
         setLocationRelativeTo(null);
     }
 
-    private void ajustes(Container c) {
+    private void ajustes(Container c, String key) {
         c.setLayout(new BorderLayout());
         JPanel mainPanel = new JPanel();
         //
@@ -52,7 +69,8 @@ public class ventanaCalibracion extends JFrame {
         agregar.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                agrgarFormC w = new agrgarFormC(controlPrincipal, key);
+                w.init();
             }
             
         });
@@ -60,7 +78,10 @@ public class ventanaCalibracion extends JFrame {
         borrar.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                int n = (int)tabla.getModel().getValueAt(tabla.getSelectedRow(), 0);
+                if(!controlPrincipal.borrar(n)){
+                    System.err.print("Error: Elemento inexistente");
+                }
             }
             
         });
@@ -82,9 +103,25 @@ public class ventanaCalibracion extends JFrame {
         });
         //
         c.add(BorderLayout.NORTH, mainPanel);
-        c.add(BorderLayout.SOUTH, new JScrollPane(tabla = new JTable(CalibTable.getInstancia()),
+        c.add(BorderLayout.SOUTH, new JScrollPane(tabla = new JTable(CalibTable.getInstancia(key)),
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
+        //
+        tabla.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() == 3){
+                    JTable target = (JTable)e.getSource();
+                    int key = (int)target.getModel().getValueAt(target.getSelectedRow(), 0);
+                    try {
+                        ventanaMediciones w = ventanaMediciones.getInstancia(key);
+                        w.init();
+                    } catch (InstantiationException | ClassNotFoundException | IllegalAccessException ex) {
+                        Logger.getLogger(ventanaTiposInstrumentos.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    System.out.print(key);
+                }
+            }
+        });
     }
 
     public void init() {
@@ -97,4 +134,5 @@ public class ventanaCalibracion extends JFrame {
     private JButton listar;
     private JTable tabla;
     private final ControlCalib controlPrincipal;
+    private static ventanaCalibracion instancia = null;
 }

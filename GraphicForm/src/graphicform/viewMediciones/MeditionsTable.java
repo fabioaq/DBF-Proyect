@@ -9,9 +9,9 @@ import javax.swing.table.AbstractTableModel;
  * @author fabio
  */
 public class MeditionsTable extends AbstractTableModel{
-      private MeditionsTable() {
+      private MeditionsTable(int key) {
         try {
-            medidas = MedGestor.getInstancia().obtenerTabla();
+            medidas = MedGestor.getInstancia().obtenerTabla(key);
         } catch (ClassNotFoundException
                 | IllegalAccessException
                 | InstantiationException ex) {
@@ -19,9 +19,9 @@ public class MeditionsTable extends AbstractTableModel{
         }
     }
 
-    public static MeditionsTable getInstancia() {
+    public static MeditionsTable getInstancia(int key) {
         if (instancia == null) {
-            instancia = new MeditionsTable();
+            instancia = new MeditionsTable(key);
         }
         return instancia;
     }

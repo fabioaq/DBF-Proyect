@@ -1,7 +1,5 @@
 package informationmanagement.Calibraciones;
 
-import informationmanagement.Mediciones.Meditions;
-import java.util.ArrayList;
 import java.sql.Date;
 
 /**
@@ -14,7 +12,6 @@ public class Calibration {
         this.id = id;
         this.date = date;
         this.instrument = instrument;
-        this.m = new ArrayList<>();
     }
     
     
@@ -26,10 +23,6 @@ public class Calibration {
         return date;
     }
 
-    public ArrayList<Meditions> getM() {
-        return m;
-    }
-    
      public static String[] getDescription(){
         return description;
     }
@@ -46,20 +39,15 @@ public class Calibration {
         s.append(getInstrument());
         s.append(", ");
         s.append(new java.util.Date(date.getTime()).toString());
-        m.forEach((medicion) -> {
-            s.append(", ");
-            s.append(medicion.toString());
-        });
         s.append("}\n");
         return s.toString();
     }
     
     private static final String[] description = {
-        "Id", "Instrumento", "Fecha", "Mediciones"
+        "Id", "Instrumento", "Fecha"
     };
     
     private final int id;
     private final Date date;
     private final String instrument;
-    private final ArrayList<Meditions> m;
 }

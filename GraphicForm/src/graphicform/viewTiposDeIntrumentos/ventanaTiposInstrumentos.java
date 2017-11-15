@@ -22,7 +22,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -73,9 +72,9 @@ public class ventanaTiposInstrumentos extends JFrame {
         //
         tabla.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                if(e.getClickCount() == 3){
-                    JTable target = (JTable)e.getSource();
-                    String key = (String)target.getModel().getValueAt(target.getSelectedRow(), 0);
+                if (e.getClickCount() == 3) {
+                    JTable target = (JTable) e.getSource();
+                    String key = (String) target.getModel().getValueAt(target.getSelectedRow(), 0);
                     try {
                         ventanaInstrumentos w = ventanaInstrumentos.getInstancia(key);
                         w.init();
@@ -90,12 +89,10 @@ public class ventanaTiposInstrumentos extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 agrgarFormTI w;
-                try {
-                    w = agrgarFormTI.getInstancia(controlPrincipal);
-                    w.init();
-                } catch (InstantiationException | ClassNotFoundException | IllegalAccessException ex) {
-                    Logger.getLogger(ventanaTiposInstrumentos.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                w = new agrgarFormTI(controlPrincipal);
+                w.init();
+                recargar();
+
             }
 
         });
@@ -103,7 +100,10 @@ public class ventanaTiposInstrumentos extends JFrame {
         borrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                String n = (String)tabla.getModel().getValueAt(tabla.getSelectedRow(), 0);
+                if(!controlPrincipal.borrar(n)){
+                    System.err.print("Error: Elemento inexistente");
+                }
             }
 
         });
@@ -124,6 +124,12 @@ public class ventanaTiposInstrumentos extends JFrame {
 
         });
 
+    }
+
+    public void recargar() {
+        this.invalidate();
+        this.validate();
+        this.repaint();
     }
 
     public void init() {

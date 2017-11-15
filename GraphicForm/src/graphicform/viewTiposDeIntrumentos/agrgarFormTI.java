@@ -20,22 +20,12 @@ import javax.swing.*;
 public class agrgarFormTI extends JFrame {
 
 
-    private agrgarFormTI(ControlTdeIns controlPrincipal) {
-        super("editar");
+    public agrgarFormTI(ControlTdeIns controlPrincipal) {
+        super("Agregar");
         this.controlPrincipal = controlPrincipal;
         config();
     }
     
-    public static agrgarFormTI getInstancia(ControlTdeIns c) throws
-        InstantiationException,
-            ClassNotFoundException,
-            IllegalAccessException {
-        if (instancia == null) {
-            instancia = new agrgarFormTI(c);
-        }
-        return instancia;
-        
-    }
 
     private void config() {
         ajustes(getContentPane());
@@ -71,6 +61,7 @@ public class agrgarFormTI extends JFrame {
                     if (!controlPrincipal.agregarIns(idF.getText(), nombreF.getText(), unidadF.getText())) {
                         System.err.println("Elemento Invalido");
                     }
+                    
                     setVisible(false);
                     dispose();
 
@@ -92,6 +83,4 @@ public class agrgarFormTI extends JFrame {
     private JTextField nombreF;
     private JTextField unidadF;
     private final ControlTdeIns controlPrincipal;
-    private static agrgarFormTI instancia;
-
 }

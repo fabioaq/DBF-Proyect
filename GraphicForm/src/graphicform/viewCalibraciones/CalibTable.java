@@ -10,9 +10,9 @@ import javax.swing.table.AbstractTableModel;
  * @author fabio
  */
 public class CalibTable extends AbstractTableModel{
-    private CalibTable() {
+    private CalibTable(String key) {
         try {
-            calibraciones = CalibGestor.getInstancia().obtenerTabla();
+            calibraciones = CalibGestor.getInstancia().obtenerTabla(key);
         } catch (ClassNotFoundException
                 | IllegalAccessException
                 | InstantiationException ex) {
@@ -20,9 +20,9 @@ public class CalibTable extends AbstractTableModel{
         }
     }
 
-    public static CalibTable getInstancia() {
+    public static CalibTable getInstancia(String key) {
         if (instancia == null) {
-            instancia = new CalibTable();
+            instancia = new CalibTable(key);
         }
         return instancia;
     }
